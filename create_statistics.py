@@ -1,3 +1,6 @@
+from stat_functions import biggest_date_difference, longest_streak, most_messages_per_day, sender_count
+from date_functions import convert_date
+
 def run_statistics(senders, messages, dates):
     user_stats = dict()
     total_msgs = 0
@@ -48,5 +51,6 @@ def run_statistics(senders, messages, dates):
     overall_stats = dict()
     overall_stats['users'] = participants
     overall_stats['dates'] = date_count
+    overall_stats['total_msgs'] = total_msgs
 
     return user_stats, overall_stats
