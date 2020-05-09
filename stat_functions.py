@@ -45,3 +45,6 @@ def most_messages_per_day(dates):              # Input: dictionary[dates diction
             top3[0][1] = dates[i]
         top3.sort(key = lambda x: x[1])
     return top3
+
+def sender_count(sender_msg):
+    return len(sender_msg)

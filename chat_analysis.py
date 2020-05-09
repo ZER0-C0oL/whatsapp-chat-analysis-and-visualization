@@ -126,7 +126,6 @@ def most_messages_per_day(dates):              # Input: dictionary[dates diction
 def sender_count(sender_msg):
     return len(sender_msg)
 
-# Creating Dashboard
 stat_sender = dict()
 total_msgs = 0
 for sender in senders:
@@ -204,20 +203,20 @@ for day, count in date_count[:min(5, len(date_count))]:
 
 # Visualizations
 
-# import matplotlib.pyplot as plt
-# labels = []
-# sizes = []
-# for l, s in participants:
-#    labels.append(l)
-#    sizes.append(s)
-# explode = [0.0] * len(labels)
-# explode[sizes.index(max(sizes))] = 0.1
-# fig1, ax1 = plt.subplots()
-# ax1.pie(sizes, explode = explode, labels=labels, autopct='%1.1f%%',
-#         shadow=True, startangle=90)
-# ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+import matplotlib.pyplot as plt
+labels = []
+sizes = []
+for l, s in participants:
+   labels.append(l)
+   sizes.append(s)
+explode = [0.0] * len(labels)
+explode[sizes.index(max(sizes))] = 0.1
+fig1, ax1 = plt.subplots()
+ax1.pie(sizes, explode = explode, labels=labels, autopct='%1.1f%%',
+        shadow=True, startangle=90)
+ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 
-# plt.show()
+plt.show()
 
 html_file.close()
 

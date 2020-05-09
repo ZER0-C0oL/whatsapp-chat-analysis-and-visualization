@@ -2,7 +2,7 @@ import sys
 file_path = sys.argv[0]
 
 chat = ''
-with open(file_name, mode = 'r', encoding = 'utf-8') as f:
+with open(file_path, mode = 'r', encoding = 'utf-8') as f:
     chat = f.readlines() 
 
 senders, messages, dates = convert_to_structured_format(chat)
