@@ -26,6 +26,7 @@ def create_html_page(senders, user_stats, overall_stats):
         html_file.write(md("#### {}. {}".format(ctr, sender)))
         html_file.write(md("* Total Messages: {}".format(user_stats[sender]['total_messages'])))
         html_file.write(md("* Media Sent: {}".format(user_stats[sender]['media'])))
+        html_file.write(md("* Total Words: {}".format(user_stats[sender]['word_count'])))
         html_file.write(md("* Top most active days:-"))
         for day, count in user_stats[sender]['most_messages']:
             html_file.write(md("{}> {}: {} messages".format(' '*10,day, count)))

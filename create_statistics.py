@@ -1,4 +1,4 @@
-from stat_functions import biggest_date_difference, longest_streak, most_messages_per_day, sender_count
+from stat_functions import *
 from date_functions import convert_date
 
 def run_statistics(senders, messages, dates):
@@ -27,9 +27,11 @@ def run_statistics(senders, messages, dates):
     # Analyzing message contents
     for sender in senders:
         count = 0
+        user_stats[sender]['word_count'] = 0
         for m in messages[sender]:
             if "<Media omitted>" in m:
                 count += 1
+            user_stats[sender]['word_count'] += count_words(m)
         user_stats[sender]["media"] = count
 
     # Overall Statistics

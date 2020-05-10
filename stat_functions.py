@@ -49,3 +49,8 @@ def most_messages_per_day(dates):              # Input: dictionary[dates diction
 
 def sender_count(sender_msg):
     return len(sender_msg)
+
+def count_words(msg):
+    if msg == '<Media Omitted>':
+        return 0
+    return msg.count(' ') + 1
