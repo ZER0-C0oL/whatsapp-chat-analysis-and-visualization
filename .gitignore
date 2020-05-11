@@ -6,6 +6,8 @@
 *.pdf
 ./venv
 venv
-*.html
+analysis.html
 *.json
 node_modules
+uploads
+package-lock.json
