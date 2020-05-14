@@ -39,4 +39,5 @@ def convert_to_structured_format(chat, date_format, messenger):
         time_stats['msg_count'][sender][get_key(date_time.hour)] += 1
                 
         last = sender
+
     return senders, messages, dates, time_stats

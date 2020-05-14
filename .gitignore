@@ -1,13 +1,7 @@
 .ipynb_checkpoints
-*.png
-*.jpg
-*.pdf
 venv
-analysis.html
-*.json
 node_modules
 uploads
 output
 package-lock.json
 __pycache__
-images

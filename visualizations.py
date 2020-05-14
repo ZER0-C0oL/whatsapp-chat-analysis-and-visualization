@@ -6,7 +6,7 @@ def msgs_by_time(msg_stats):
     ax = fig.add_axes([0,0,2,1])
     colors = ['b', 'g', 'r', 'm']
     ctr = 0
-    
+    # print(msg_stats)
     for sender in msg_stats:
         time_ranges = list(msg_stats[sender].keys())
         time_val = [(ts + 3/2.0) + 0.25 * ctr for ts in range(24) if ts % 3 == 0]
@@ -21,6 +21,7 @@ def msgs_by_time(msg_stats):
     plt.ylabel("Messages Sent")
     if len(msg_stats.keys()) > 1:
         plt.legend()
+    fig.set_size_inches(5, 3, forward=True)
     plt.savefig("output/images/time_msg_viz.png", bbox_inches = 'tight')
     # plt.show()
 
@@ -43,36 +44,38 @@ def words_by_time(word_stats):
     plt.xlabel("Time (24 hours)")
     plt.ylabel("Words Sent")
     plt.legend()
+    fig.set_size_inches(5, 3, forward=True)
     plt.savefig("output/images/time_words_viz.png", bbox_inches = 'tight')
 
 def msg_chart(overall_stats):
     labels = []
     sizes = []
-    for l, s in overall_stats['users']:
+    L = sorted(overall_stats['users'], key = lambda x: x[0])
+    for l, s in L:
         sizes.append(s)
         labels.append(l + " (" + str(sizes[-1]) + ")")
     explode = [0.0] * len(labels)
     explode[sizes.index(max(sizes))] = 0.1
-    fig1, ax1 = plt.subplots()
-    ax1.pie(sizes, explode = explode, labels=labels, autopct='%1.1f%%',
+    fig, ax = plt.subplots()
+    ax.pie(sizes, explode = explode, labels=labels, autopct='%1.1f%%',
             shadow=True, startangle=90)
-    ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
-
+    ax.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+    fig.set_size_inches(4, 6, forward=True)
     plt.savefig("output/images/msg_chart.png", bbox_inches = 'tight')
 
 def word_chart(user_stats):
     labels = []
     sizes = []
-    for sender in user_stats:
+    for sender in sorted(user_stats.keys()):
         sizes.append(user_stats[sender]['word_count'])
         labels.append(sender + " (" + str(sizes[-1]) + ")")
     explode = [0.0] * len(labels)
     explode[sizes.index(max(sizes))] = 0.1
-    fig1, ax1 = plt.subplots()
-    ax1.pie(sizes, explode = explode, labels=labels, autopct='%1.1f%%',
+    fig, ax = plt.subplots()
+    ax.pie(sizes, explode = explode, labels=labels, autopct='%1.1f%%',
             shadow=True, startangle=90)
-    ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
-
+    ax.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+    fig.set_size_inches(4, 6, forward=True)
     plt.savefig("output/images/word_chart.png", bbox_inches = 'tight')
 
 
@@ -80,8 +83,8 @@ def create_visualizations(user_stats, overall_stats, time_stats):
 
     # Create Time-based Visualizations
     if len(time_stats['word_count'].keys()) <= 4:
-        msgs_by_time(time_stats['word_count'])
-        words_by_time(time_stats['msg_count'])
+        msgs_by_time(time_stats['msg_count'])
+        words_by_time(time_stats['word_count'])
     
     # Create Count-based Visualizations
     msg_chart(overall_stats)

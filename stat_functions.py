@@ -69,3 +69,23 @@ def count_words(msg):
     if msg == '<Media Omitted>':
         return 0
     return msg.count(' ') + 1
+
+def get_emoji_stats(messages):
+    from emoji import UNICODE_EMOJI as emojis
+    emoji_stats = dict()
+    for sender in messages:
+        emoji_stats[sender] = dict()
+        for msg in messages[sender]:
+            for char in msg:
+                if char in emojis:
+                    if char in emoji_stats[sender]:
+                        emoji_stats[sender][char] += 1
+                    else:
+                        emoji_stats[sender][char] = 1
+    return emoji_stats
+
+def get_most_used(d, top):
+    L = list(d.items())
+    L.sort(key = lambda x: -x[1])
+    return L[:top]
+    

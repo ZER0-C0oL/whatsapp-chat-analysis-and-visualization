@@ -14,13 +14,13 @@ def run_statistics(senders, messages, dates, messenger):
         streak, st, en = longest_streak(list(dates[sender].keys()))
         user_stats[sender]['longest_streak'] = (streak, convert_date(st), convert_date(en))
         
-        top3 = most_messages_per_day(dates[sender])[::-1]
+        top3 = get_most_used(dates[sender], 3)[::-1]
         end = len(top3)
         for i in range(len(top3)):
             if top3[i][0] == None:
                 end = i
                 break
-            top3[i][0] = convert_date(top3[i][0])
+            top3[i] = (convert_date(top3[i][0]), top3[i][1])
         top3 = top3[:end]
         user_stats[sender]['most_messages'] = top3
         
@@ -29,6 +29,8 @@ def run_statistics(senders, messages, dates, messenger):
         total_msgs += count
 
     # Analyzing message contents
+
+    ## Message, Word, Nudges Count
     for sender in senders:
         count = 0
         user_stats[sender]['word_count'] = 0
@@ -43,6 +45,11 @@ def run_statistics(senders, messages, dates, messenger):
                 total_nudges += 1
             user_stats[sender]['word_count'] += count_words(m)
         user_stats[sender]["media"] = count
+    
+    ## Emojis Count
+    emoji_stats = get_emoji_stats(messages)
+    for sender in emoji_stats:
+        user_stats[sender]['fav_emojis'] = get_most_used(emoji_stats[sender], 5)
 
     # Overall Statistics
     participants = []
