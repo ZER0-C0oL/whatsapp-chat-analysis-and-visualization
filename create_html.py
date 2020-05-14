@@ -6,16 +6,19 @@ def extract_name(path):
     s = path.rfind('/')
     return path[s+1:e]
 
-def create_html_page(senders, user_stats, overall_stats, file_path, messenger):
+def create_html_page(user_stats, overall_stats, file_path):
     from markdown import markdown as md
     name = './output/analysis_of_' + extract_name(file_path) + str(random.randint(0,1000)) + '.html'
     print(name)
     html_file = open(name, mode = 'w', encoding = 'utf-8', errors = 'xmlcharrefreplace')
-
+    html_file.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">')
+    # html_file.write('<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>')
+    # html_file.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>')
+    # html_file.write('<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>')
     html_file.write(md("## Overall Statistics"))
 
     html_file.write(md("Total Messages: {}".format(overall_stats['total_msgs'])))
-    if messenger == 'Hike':
+    if 'total_nudges' in overall_stats:
         html_file.write(md("Total Nudges: {}".format(overall_stats['total_nudges'])))
 
         
@@ -25,19 +28,31 @@ def create_html_page(senders, user_stats, overall_stats, file_path, messenger):
     for s, c in overall_stats['users'][:min(10,len(overall_stats['users']))]:
         html_file.write(md("{}\. {}: {} messages ({}%)".format(ctr, s, c, int((c/overall_stats['total_msgs']) * 100))))
         ctr += 1
-        
+    html_file.write("<img src = 'file:////C:/Users/Deadpool/Pictures/dsc_logo.jpg'><br>")
     html_file.write('\n\n')
     html_file.write(md("#### Most active days"))
     for day, count in overall_stats['dates'][:min(5, len(overall_stats['dates']))]:
         html_file.write(md("> - {}: {} messages".format(convert_date(day), count)))
 
-    html_file.write('\n\n\n\n\n')
+    html_file.write(md("#### Message Distribution"))
+    html_file.write("<img src = 'images/msg_chart.png'><br>")
+    html_file.write(md("#### Words Distribution"))
+    html_file.write("<img src = 'images/word_chart.png'><br>")
+
+    if len(user_stats.keys()) <= 4:
+        html_file.write(md("#### Message Activity"))
+        html_file.write("<img src = 'images/time_msg_viz.png'><br>")
+        html_file.write(md("#### Words Activity"))
+        html_file.write("<img src = 'images/time_words_viz.png'><br>")
+
+
+    html_file.write("<br><br><br>")
 
     html_file.write(md("## User Statistics"))
-    for ctr, sender in enumerate(senders,1):
+    for ctr, sender in enumerate(list(user_stats.keys()),1):
         html_file.write(md("<details><summary> {}. {} </summary>".format(ctr, sender)))
         html_file.write(md("* Total Messages: {}".format(user_stats[sender]['total_messages'])))
-        if messenger == 'Hike':
+        if 'nudges' in user_stats[sender]:
             html_file.write(md("* Total Nudges: {}".format(user_stats[sender]['nudges'])))
         html_file.write(md("* Media Sent: {}".format(user_stats[sender]['media'])))
         html_file.write(md("* Total Words: {}".format(user_stats[sender]['word_count'])))
@@ -49,5 +64,6 @@ def create_html_page(senders, user_stats, overall_stats, file_path, messenger):
         c, s, e = user_stats[sender]['biggest_date_difference']
         html_file.write(md("* Longest Span without messages: {} days (from {} to {})".format(c,s,e)))
         html_file.write(md("</details>"))
+    html_file.write("<br><br><br>")
     
     html_file.close()

@@ -6,21 +6,22 @@ def msgs_by_time(msg_stats):
     ax = fig.add_axes([0,0,2,1])
     colors = ['b', 'g', 'r', 'm']
     ctr = 0
-    time_val = [(ts + 3/2.0) + 0.25 * ctr for ts in range(24) if ts % 3 == 0]
+    
     for sender in msg_stats:
         time_ranges = list(msg_stats[sender].keys())
+        time_val = [(ts + 3/2.0) + 0.25 * ctr for ts in range(24) if ts % 3 == 0]
         time_count = [msg_stats[sender][t] for t in time_ranges]
         ticks = time_val
         ax.bar(time_val,time_count, color = colors[ctr], width = 0.50, label = sender)
         if ctr == 0:
+            plt.xticks(time_val)
             ax.set_xticklabels(list(msg_stats[sender].keys()))
         ctr += 1
-    plt.xticks(time_val)
     plt.xlabel("Time (24 hours)")
     plt.ylabel("Messages Sent")
     if len(msg_stats.keys()) > 1:
         plt.legend()
-    plt.savefig("time_msg_viz.png")
+    plt.savefig("output/images/time_msg_viz.png", bbox_inches = 'tight')
     # plt.show()
 
 def words_by_time(word_stats):
@@ -29,20 +30,20 @@ def words_by_time(word_stats):
     ax = fig.add_axes([0,0,2,1])
     colors = ['b', 'g', 'r', 'm']
     ctr = 0
-    time_val = [(ts + 3/2.0) + 0.25 * ctr for ts in range(24) if ts % 3 == 0]
     for sender in word_stats:
         time_ranges = list(word_stats[sender].keys())
+        time_val = [(ts + 3/2.0) + 0.25 * ctr for ts in range(24) if ts % 3 == 0]
         time_count = [word_stats[sender][t] for t in time_ranges]
         ticks = time_val
         ax.bar(time_val,time_count, color = colors[ctr], width = 0.50, label = sender)
         if ctr == 0:
+            plt.xticks(time_val)
             ax.set_xticklabels(list(word_stats[sender].keys()))
         ctr += 1
-    plt.xticks(time_val)
     plt.xlabel("Time (24 hours)")
     plt.ylabel("Words Sent")
     plt.legend()
-    plt.savefig("time_words_viz.png")
+    plt.savefig("output/images/time_words_viz.png", bbox_inches = 'tight')
 
 def msg_chart(overall_stats):
     labels = []
@@ -57,7 +58,7 @@ def msg_chart(overall_stats):
             shadow=True, startangle=90)
     ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 
-    plt.savefig("msg_chart.png")
+    plt.savefig("output/images/msg_chart.png", bbox_inches = 'tight')
 
 def word_chart(user_stats):
     labels = []
@@ -72,7 +73,7 @@ def word_chart(user_stats):
             shadow=True, startangle=90)
     ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 
-    plt.savefig("word_chart.png")
+    plt.savefig("output/images/word_chart.png", bbox_inches = 'tight')
 
 
 def create_visualizations(user_stats, overall_stats, time_stats):
