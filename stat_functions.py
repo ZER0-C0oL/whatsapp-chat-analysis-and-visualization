@@ -1,13 +1,28 @@
-from date_functions import sort_dates, get_date_difference, convert_date
+def convert_date(date):
+    # Convert date from dd/mm/yy format to day-mon-YY format
+    res = str(date.day)
+    if date.day in (1,21,31):
+        res += 'st'
+    elif date.day in (2,22):
+        res += 'nd'
+    elif date.day in (3,23):
+        res += 'rd'
+    else:
+        res += 'th'
+    months = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    res += " " + months[int(date.month)]
+    res += " " + str(date.year) 
+    return res
+
 def biggest_date_difference(dates):       # Input: list[key list of dates dictionary]
-    dates = sort_dates(dates)
+    dates.sort()
     if len(dates) == 1:
-        return 0
-    max_diff = get_date_difference(dates[0], dates[1])
+        return 0, dates[0], dates[0]
+    max_diff = abs((dates[1] - dates[0]).days)
     date1 = dates[0]
     date2 = dates[1]
     for i in range(1, len(dates)):
-        diff = get_date_difference(dates[i-1], dates[i])
+        diff = abs((dates[i] - dates[i-1]).days)
         if diff > max_diff:
             max_diff = diff
             date1 = dates[i-1]
@@ -16,13 +31,13 @@ def biggest_date_difference(dates):       # Input: list[key list of dates dictio
     return max_diff, date1, date2
 
 def longest_streak(dates):                # Input: list[key list of dates dictionary]
-    dates = sort_dates(dates)
+    dates.sort()
     streak = 1
     max_streak = 1
     st, max_st = dates[0], dates[0]
     en, max_en = dates[0], dates[0]
     for i in range(1,len(dates)):
-        if get_date_difference(dates[i], dates[i-1]) == 1:
+        if abs((dates[i] - dates[i-1]).days) == 1:
             streak += 1
             en = dates[i]
         else:

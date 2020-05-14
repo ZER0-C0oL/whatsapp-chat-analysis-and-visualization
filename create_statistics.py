@@ -1,7 +1,6 @@
 from stat_functions import *
-from date_functions import convert_date
 
-def run_statistics(senders, messages, dates):
+def run_statistics(senders, messages, dates, messenger):
     user_stats = dict()
     total_msgs = 0
 
@@ -16,8 +15,13 @@ def run_statistics(senders, messages, dates):
         user_stats[sender]['longest_streak'] = (streak, convert_date(st), convert_date(en))
         
         top3 = most_messages_per_day(dates[sender])[::-1]
+        end = len(top3)
         for i in range(len(top3)):
+            if top3[i][0] == None:
+                end = i
+                break
             top3[i][0] = convert_date(top3[i][0])
+        top3 = top3[:end]
         user_stats[sender]['most_messages'] = top3
         
         count = sender_count(messages[sender])
@@ -28,9 +32,15 @@ def run_statistics(senders, messages, dates):
     for sender in senders:
         count = 0
         user_stats[sender]['word_count'] = 0
+        if messenger == 'Hike':
+            user_stats[sender]['nudges'] = 0
+            total_nudges = 0
         for m in messages[sender]:
             if "<Media omitted>" in m:
                 count += 1
+            if messenger == 'Hike' and m.strip() == 'Nudge!':
+                user_stats[sender]['nudges'] += 1
+                total_nudges += 1
             user_stats[sender]['word_count'] += count_words(m)
         user_stats[sender]["media"] = count
 
@@ -54,5 +64,6 @@ def run_statistics(senders, messages, dates):
     overall_stats['users'] = participants
     overall_stats['dates'] = date_count
     overall_stats['total_msgs'] = total_msgs
-
+    if messenger == 'Hike':
+        overall_stats['total_nudges'] = total_nudges   
     return user_stats, overall_stats

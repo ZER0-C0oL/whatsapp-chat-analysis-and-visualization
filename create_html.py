@@ -1,11 +1,23 @@
-from date_functions import convert_date
+from stat_functions import convert_date
+import random
 
-def create_html_page(senders, user_stats, overall_stats):
+def extract_name(path):
+    e = path.rfind('.')
+    s = path.rfind('/')
+    return path[s+1:e]
+
+def create_html_page(senders, user_stats, overall_stats, file_path, messenger):
     from markdown import markdown as md
-
-    html_file = open('analysis.html', mode = 'w', encoding = 'utf-8', errors = 'xmlcharrefreplace')
+    name = './output/analysis_of_' + extract_name(file_path) + str(random.randint(0,1000)) + '.html'
+    print(name)
+    html_file = open(name, mode = 'w', encoding = 'utf-8', errors = 'xmlcharrefreplace')
 
     html_file.write(md("## Overall Statistics"))
+
+    html_file.write(md("Total Messages: {}".format(overall_stats['total_msgs'])))
+    if messenger == 'Hike':
+        html_file.write(md("Total Nudges: {}".format(overall_stats['total_nudges'])))
+
         
     html_file.write(md("#### Most active participants"))
 
@@ -23,8 +35,10 @@ def create_html_page(senders, user_stats, overall_stats):
 
     html_file.write(md("## User Statistics"))
     for ctr, sender in enumerate(senders,1):
-        html_file.write(md("#### {}. {}".format(ctr, sender)))
+        html_file.write(md("<details><summary> {}. {} </summary>".format(ctr, sender)))
         html_file.write(md("* Total Messages: {}".format(user_stats[sender]['total_messages'])))
+        if messenger == 'Hike':
+            html_file.write(md("* Total Nudges: {}".format(user_stats[sender]['nudges'])))
         html_file.write(md("* Media Sent: {}".format(user_stats[sender]['media'])))
         html_file.write(md("* Total Words: {}".format(user_stats[sender]['word_count'])))
         html_file.write(md("* Top most active days:-"))
@@ -34,5 +48,6 @@ def create_html_page(senders, user_stats, overall_stats):
         html_file.write(md("* Longest Streak: {} days (from {} to {})".format(c,s,e)))
         c, s, e = user_stats[sender]['biggest_date_difference']
         html_file.write(md("* Longest Span without messages: {} days (from {} to {})".format(c,s,e)))
+        html_file.write(md("</details>"))
     
     html_file.close()
