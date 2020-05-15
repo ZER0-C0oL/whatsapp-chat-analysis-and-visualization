@@ -47,12 +47,8 @@ def convert_to_structured_format(chat, date_format, messenger):
 
         # Adding time stats    
         if last_time != None:
-            difference = (date_time - last_time).seconds // 60
-            # Print Debugging
-            if difference > 1440:
-                print(difference)
-                print(last, sender)
-            if difference <= 30:
+            difference = (date_time - last_time).total_seconds() // 60
+            if difference <= 60:
                 sess_len += 1
                 sess_date = date_time.date()
             else:

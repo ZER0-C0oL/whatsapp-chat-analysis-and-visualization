@@ -36,16 +36,26 @@ def create_html_page(user_stats, overall_stats, time_stats, file_path):
     
     html_file.write(md("#### Longest Session: {} messages in one session on {}".format(time_stats['longest_session']['length'], convert_date(time_stats['longest_session']['date']))))
 
+    # Encoding images into base64 to crate self-maintained webpage
+    import base64
     html_file.write(md("#### Message Distribution"))
-    html_file.write("<img src = 'images/msg_chart.png'><br>")
+    with open("images/msg_chart.png", "rb") as img:
+        encoded = base64.b64encode(img.read())
+        html_file.write("<img src = '" + encoded + "'><br>")
     html_file.write(md("#### Words Distribution"))
-    html_file.write("<img src = 'images/word_chart.png'><br>")
+    with open("images/word_chart.png", "rb") as img:
+        encoded = base64.b64encode(img.read())
+        html_file.write("<img src = '" + encoded + "'><br>")
 
     if len(user_stats.keys()) <= 4:
         html_file.write(md("#### Message Activity"))
-        html_file.write("<img src = 'images/time_msg_viz.png'><br>")
+        with open("images/time_msg_viz.png", "rb") as img:
+            encoded = base64.b64encode(img.read())
+            html_file.write("<img src = '" + encoded + "'><br>")
         html_file.write(md("#### Words Activity"))
-        html_file.write("<img src = 'images/time_words_viz.png'><br>")
+        with open("images/time_words_viz.png", "rb") as img:
+            encoded = base64.b64encode(img.read())
+            html_file.write("<img src = '" + encoded + "'><br>")
 
 
     html_file.write("<br><br><br>")
@@ -64,8 +74,8 @@ def create_html_page(user_stats, overall_stats, time_stats, file_path):
         html_file.write(md("* Favorite emojis:-"))
         for emoji, count in user_stats[sender]['fav_emojis']:
             html_file.write(md("{}> {}: Used {} times".format(' '*10, emoji, count)))
-        html_file.write(md("Average Reply Time : {}".format(time_stats['reply'][sender]['avg'])))
-        html_file.write(md("Maximum Reply Time : {}".format(time_stats['reply'][sender]['max_time'])))
+        html_file.write(md("* Average Reply Time : {}".format(time_stats['reply'][sender]['avg'])))
+        html_file.write(md("* Maximum Reply Time : {}".format(time_stats['reply'][sender]['max_time'])))
         # html_file.write(md("Total Replies : {}".format(time_stats['reply'][sender]['rep_count'])))
         c, s, e = user_stats[sender]['longest_streak']
         html_file.write(md("* Longest Streak: {} days (from {} to {})".format(c,s,e)))
