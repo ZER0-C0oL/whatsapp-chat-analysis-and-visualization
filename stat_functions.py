@@ -14,6 +14,21 @@ def convert_date(date):
     res += " " + str(date.year) 
     return res
 
+def format_minutes(mins):
+    mins = int(mins)
+    days = mins // 1440
+    mins %= 1440
+    hours = mins // 60
+    mins %= 60
+    ans = ""
+    if days:
+        ans += str(days) + " days "
+    if hours:
+        ans += str(hours) + " hours "
+    if mins:
+        ans += str(mins) + " mins"
+    return ans
+
 def biggest_date_difference(dates):       # Input: list[key list of dates dictionary]
     dates.sort()
     if len(dates) == 1:

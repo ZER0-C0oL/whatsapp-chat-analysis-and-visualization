@@ -1,6 +1,6 @@
 from stat_functions import *
 
-def run_statistics(senders, messages, dates, messenger):
+def run_statistics(senders, messages, dates, time_stats, messenger):
     user_stats = dict()
     total_msgs = 0
 
@@ -51,6 +51,11 @@ def run_statistics(senders, messages, dates, messenger):
     for sender in emoji_stats:
         user_stats[sender]['fav_emojis'] = get_most_used(emoji_stats[sender], 5)
 
+    # Time Statistics
+    for sender in time_stats['reply']:
+        time_stats['reply'][sender]['avg'] = format_minutes(time_stats['reply'][sender]['avg'])
+        time_stats['reply'][sender]['max_time'] = format_minutes(time_stats['reply'][sender]['max_time'])
+
     # Overall Statistics
     participants = []
     for sender in senders:
@@ -73,4 +78,4 @@ def run_statistics(senders, messages, dates, messenger):
     overall_stats['total_msgs'] = total_msgs
     if messenger == 'Hike':
         overall_stats['total_nudges'] = total_nudges   
-    return user_stats, overall_stats
+    return user_stats, overall_stats, time_stats

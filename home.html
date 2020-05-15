@@ -1,6 +1,12 @@
 <html>
      <head>
         <style>
+/*
+            html{
+                background: rgb(255,255,255);
+                background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(68,84,135,1) 74%, rgba(0,16,36,1) 100%);
+            }
+*/
             #xx {
               padding: 10px;
               color: white;
@@ -8,7 +14,7 @@
               border: 1px solid #000;
               border-radius: 5px;
               cursor: pointer;
-              font-size:24px;
+              font-size:15px;
             }
 
             #xx:hover {
@@ -24,6 +30,10 @@
                 font-size=20px;
             }
             
+            f {
+                border:     10px;
+            }
+            
             p{
                 font-size:10px;
             }
@@ -36,13 +46,15 @@
     
     <body>
         <h1> Chat Analyzer </h1>
-        <h2> Steps </h2>
-        <p> 1. Open preferred messenger (Whatsapp/Hike) and open the chat you want to analyze. </p>
-        <p> 2. Select the top-right properites option. </p>
-        <p> 3. Go to "more", Select Export Chat option. </p>
-        <p> 4. Select the "Without Media" option. </p>
-        <p> 5. Save the .txt somewhere and upload it here. </p>
-        <p> 6. Click on Submit and the result will be shown to you. </p>
+        <details>
+            <summary>Steps</summary>
+                <p> 1. Open preferred messenger (Whatsapp/Hike) and open the chat you want to analyze. </p>
+                <p> 2. Select the top-right properites option. </p>
+                <p> 3. Go to "more", Select Export Chat option. </p>
+                <p> 4. Select the "Without Media" option. </p>
+                <p> 5. Save the .txt somewhere and upload it here. </p>
+                <p> 6. Click on Submit and the result will be shown to you. </p>
+        </details>
         <br><br>
         <form action="analyze" method="post" enctype="multipart/form-data">
             Upload text file here: &nbsp;
@@ -56,8 +68,9 @@
             <input type = "radio" id = "msgnr2" name = "messenger" value = "Hike">
             <label class = "des" for = "msgnr2">Hike</label>
             <br><br><br>
-            Date Format<br>
-            <i><small>(Open the txt file and check which date format is being followed to mark the chat messages):</small></i>
+            Date Format :
+            <br>
+            <i><small>(Open the txt file and check which date format is being followed to mark the chat messages)</small></i>
             <br>
             <input type = "radio" id = "first" name = "date_format" value = "dd/mm/yy">
             <label class = "des" for = "first">dd/mm/yy</label>

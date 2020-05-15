@@ -13,6 +13,6 @@ with open(file_path, mode = 'r', encoding = 'utf-8') as f:
     chat.extend(f.readlines())
 
 senders, messages, dates, time_stats = convert_to_structured_format(chat, date_format, messenger)
-user_stats, overall_stats = run_statistics(senders, messages, dates, messenger)
+user_stats, overall_stats, time_stats = run_statistics(senders, messages, dates, time_stats, messenger)
 create_visualizations(user_stats, overall_stats, time_stats)
-create_html_page(user_stats, overall_stats, file_path)
+create_html_page(user_stats, overall_stats, time_stats, file_path)
