@@ -49,9 +49,6 @@ def run_statistics(senders, messages, dates, time_stats, messenger):
                     audio += 1
                 elif 'VIDEO' in m.split()[-1]:
                     video += 1
-                else:
-                    if 'APK' not in m:
-                        print(m)
 
             if messenger == 'Hike' and m.strip() == 'Nudge!':
                 user_stats[sender]['nudges'] += 1
