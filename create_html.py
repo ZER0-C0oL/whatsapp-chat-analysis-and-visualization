@@ -39,23 +39,23 @@ def create_html_page(user_stats, overall_stats, time_stats, file_path):
     # Encoding images into base64 to crate self-maintained webpage
     import base64
     html_file.write(md("#### Message Distribution"))
-    with open("images/msg_chart.png", "rb") as img:
-        encoded = base64.b64encode(img.read())
-        html_file.write("<img src = '" + encoded + "'><br>")
+    with open("output/images/msg_chart.png", "rb") as img:
+        encoded = base64.b64encode(img.read()).decode('ascii')
+        html_file.write("<img src = 'data:image/png;base64,{0}'><br>".format(encoded))
     html_file.write(md("#### Words Distribution"))
-    with open("images/word_chart.png", "rb") as img:
-        encoded = base64.b64encode(img.read())
-        html_file.write("<img src = '" + encoded + "'><br>")
+    with open("output/images/word_chart.png", "rb") as img:
+        encoded = base64.b64encode(img.read()).decode('ascii')
+        html_file.write("<img src = 'data:image/png;base64,{0}'><br>".format(encoded))
 
     if len(user_stats.keys()) <= 4:
         html_file.write(md("#### Message Activity"))
-        with open("images/time_msg_viz.png", "rb") as img:
-            encoded = base64.b64encode(img.read())
-            html_file.write("<img src = '" + encoded + "'><br>")
+        with open("output/images/time_msg_viz.png", "rb") as img:
+            encoded = base64.b64encode(img.read()).decode('ascii')
+            html_file.write("<img src = 'data:image/png;base64,{0}'><br>".format(encoded))
         html_file.write(md("#### Words Activity"))
-        with open("images/time_words_viz.png", "rb") as img:
-            encoded = base64.b64encode(img.read())
-            html_file.write("<img src = '" + encoded + "'><br>")
+        with open("output/images/time_words_viz.png", "rb") as img:
+            encoded = base64.b64encode(img.read()).decode('ascii')
+            html_file.write("<img src = 'data:image/png;base64,{0}'><br>".format(encoded))
 
 
     html_file.write("<br><br><br>")
@@ -67,6 +67,9 @@ def create_html_page(user_stats, overall_stats, time_stats, file_path):
         if 'nudges' in user_stats[sender]:
             html_file.write(md("* Total Nudges: {}".format(user_stats[sender]['nudges'])))
         html_file.write(md("* Media Sent: {}".format(user_stats[sender]['media'])))
+        if 'audio' in user_stats[sender]:
+            html_file.write(md("* Voice Notes: {}".format(user_stats[sender]['audio'])))
+            html_file.write(md("* Videos Sent: {}".format(user_stats[sender]['video'])))
         html_file.write(md("* Total Words: {}".format(user_stats[sender]['word_count'])))
         html_file.write(md("* Top most active days:-"))
         for day, count in user_stats[sender]['most_messages']:

@@ -83,6 +83,8 @@ def sender_count(sender_msg):
 def count_words(msg):
     if msg == '<Media Omitted>':
         return 0
+    if "File Transfer of type" in msg:
+        return 0
     return msg.count(' ') + 1
 
 def get_emoji_stats(messages):

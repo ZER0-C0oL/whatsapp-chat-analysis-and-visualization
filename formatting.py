@@ -31,6 +31,8 @@ def convert_to_structured_format(chat, date_format, messenger):
         # Adding data
         sender = sender.strip()
         content = content.strip()
+        if "Your messages and calls are secured with 128-bit encryption" in content or "added you as a friend" in content:
+            continue
         if sender not in senders:
             # Initializing all structures
             senders.add(sender)
