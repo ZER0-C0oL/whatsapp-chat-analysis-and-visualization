@@ -68,7 +68,7 @@ def longest_streak(dates):                # Input: list[key list of dates dictio
         max_en = en
     return max_streak, max_st, max_en
 
-def most_messages_per_day(dates):              # Input: dictionary[dates dictionary]
+def most_messages_per_day(dates):                  # Input: dictionary[dates dictionary]
     top3 = [[None, 0], [None, 0], [None, 0]]       # [0]: 3rd rank, [1]: 2nd rank [2]: 3rd rank
     for i in dates:
         if top3[0][1] < dates[i]:
@@ -81,9 +81,9 @@ def sender_count(sender_msg):
     return len(sender_msg)
 
 def count_words(msg):
-    if msg == '<Media Omitted>':
+    if msg == '<Media Omitted>':            # Media in Whatsapp
         return 0
-    if "File Transfer of type" in msg:
+    if "File Transfer of type" in msg:      # Media in Hike
         return 0
     return msg.count(' ') + 1
 

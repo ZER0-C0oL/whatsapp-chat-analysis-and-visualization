@@ -11,11 +11,7 @@ def create_html_page(user_stats, overall_stats, time_stats, file_path):
     name = './output/analysis_of_' + extract_name(file_path) + str(random.randint(0,1000)) + '.html'
     print(name)
     html_file = open(name, mode = 'w', encoding = 'utf-8', errors = 'xmlcharrefreplace')
-    # html_file.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">')
-    # html_file.write('<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>')
-    # html_file.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>')
-    # html_file.write('<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>')
-    # html_file.write("<div style='padding=40px;'>")
+    html_file.write("<html><head><meta charset='UTF-8'></head><body>")
     html_file.write(md("## Overall Statistics"))
 
     html_file.write(md("#### Total Messages: {}".format(overall_stats['total_msgs'])))
@@ -79,12 +75,11 @@ def create_html_page(user_stats, overall_stats, time_stats, file_path):
             html_file.write(md("{}> {}: Used {} times".format(' '*10, emoji, count)))
         html_file.write(md("* Average Reply Time : {}".format(time_stats['reply'][sender]['avg'])))
         html_file.write(md("* Maximum Reply Time : {}".format(time_stats['reply'][sender]['max_time'])))
-        # html_file.write(md("Total Replies : {}".format(time_stats['reply'][sender]['rep_count'])))
         c, s, e = user_stats[sender]['longest_streak']
         html_file.write(md("* Longest Streak: {} days (from {} to {})".format(c,s,e)))
         c, s, e = user_stats[sender]['biggest_date_difference']
         html_file.write(md("* Longest Span without messages: {} days (from {} to {})".format(c,s,e)))
         html_file.write(md("</details>"))
     html_file.write("<br><br><br>")
-    # html_file.write("</div>")
+    html_file.write("</body></html>")
     html_file.close()

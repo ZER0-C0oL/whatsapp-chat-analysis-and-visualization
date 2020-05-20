@@ -66,8 +66,6 @@ app.post('/analyze', function(req, res) {
            if (err) {
                throw err;
            }
-        //    html = String(html).replace("images/", "output/images/");
-        //    console.log(html);
            res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
            res.write(html); 
            res.end();
