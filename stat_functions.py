@@ -105,4 +105,20 @@ def get_most_used(d, top):
     L = list(d.items())
     L.sort(key = lambda x: -x[1])
     return L[:top]
-    
+
+
+def get_most_used_words(msgs):
+    from collections import Counter
+    from nltk.corpus import stopwords
+    stop_words = set(stopwords.words('english'))
+    manual = ['i', 'hai', 'toh', 'you', 'u', 'm', 'h', 'and', '?', 'nahi', 'hai', 'hi', 'ke']
+    for word in manual:
+        stop_words.add(word)
+    L = []
+    for msg in msgs:
+        if '<Media' in msg:
+            continue
+        for word in msg.split():
+            if word.lower() not in stop_words:
+                L.append(word)
+    return Counter(L).most_common(10)

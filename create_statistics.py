@@ -64,6 +64,15 @@ def run_statistics(senders, messages, dates, time_stats, messenger):
     for sender in emoji_stats:
         user_stats[sender]['fav_emojis'] = get_most_used(emoji_stats[sender], 5)
 
+    ## Most used words
+    for sender in messages:
+        print(sender, ":-")
+        ans = get_most_used_words(messages[sender])
+        for word, count in ans:
+            print(word, ":", count)
+        print()
+
+
     # Time Statistics
     for sender in time_stats['reply']:
         time_stats['reply'][sender]['avg'] = format_minutes(time_stats['reply'][sender]['avg'])
