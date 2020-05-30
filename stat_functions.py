@@ -68,15 +68,6 @@ def longest_streak(dates):                # Input: list[key list of dates dictio
         max_en = en
     return max_streak, max_st, max_en
 
-def most_messages_per_day(dates):                  # Input: dictionary[dates dictionary]
-    top3 = [[None, 0], [None, 0], [None, 0]]       # [0]: 3rd rank, [1]: 2nd rank [2]: 3rd rank
-    for i in dates:
-        if top3[0][1] < dates[i]:
-            top3[0][0] = i
-            top3[0][1] = dates[i]
-        top3.sort(key = lambda x: x[1])
-    return top3
-
 def sender_count(sender_msg):
     return len(sender_msg)
 
@@ -121,4 +112,5 @@ def get_most_used_words(msgs):
         for word in msg.split():
             if word.lower() not in stop_words:
                 L.append(word)
-    return Counter(L).most_common(10)
+    C = Counter(L)
+    return C.most_common(10)

@@ -4,7 +4,7 @@ def run_statistics(senders, messages, dates, time_stats, messenger):
     user_stats = dict()
     total_msgs = 0
 
-    # General stats
+    # User stats
     for sender in senders:
         user_stats[sender] = dict()
         
@@ -14,15 +14,15 @@ def run_statistics(senders, messages, dates, time_stats, messenger):
         streak, st, en = longest_streak(list(dates[sender].keys()))
         user_stats[sender]['longest_streak'] = (streak, convert_date(st), convert_date(en))
         
-        top3 = get_most_used(dates[sender], 3)[::-1]
-        end = len(top3)
-        for i in range(len(top3)):
-            if top3[i][0] == None:
+        top_days = get_most_used(dates[sender], 10)[::-1]
+        end = len(top_days)
+        for i in range(len(top_days)):
+            if top_days[i][0] == None:
                 end = i
                 break
-            top3[i] = (convert_date(top3[i][0]), top3[i][1])
-        top3 = sorted(top3[:end], key = lambda x: -x[1])
-        user_stats[sender]['most_messages'] = top3  
+            top_days[i] = (convert_date(top_days[i][0]), top_days[i][1])
+        top_days = sorted(top_days[:end], key = lambda x: -x[1])
+        user_stats[sender]['most_messages'] = top_days  
         
         count = sender_count(messages[sender])
         user_stats[sender]['total_messages'] = count
@@ -66,11 +66,11 @@ def run_statistics(senders, messages, dates, time_stats, messenger):
 
     ## Most used words
     for sender in messages:
-        print(sender, ":-")
+        # print(sender, ":-")
         ans = get_most_used_words(messages[sender])
-        for word, count in ans:
-            print(word, ":", count)
-        print()
+        # for word, count in ans:
+        #     print(word, ":", count)
+        # print()
 
 
     # Time Statistics

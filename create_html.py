@@ -27,7 +27,7 @@ def create_html_page(user_stats, overall_stats, time_stats, file_path):
         ctr += 1
     html_file.write('<br>')
     html_file.write(md("#### Most active days"))
-    for day, count in overall_stats['dates'][:min(5, len(overall_stats['dates']))]:
+    for day, count in overall_stats['dates'][:min(10, len(overall_stats['dates']))]:
         html_file.write(md("> - {}: {} messages".format(convert_date(day), count)))
     
     html_file.write(md("#### Longest Session: {} messages in one session on {}".format(time_stats['longest_session']['length'], convert_date(time_stats['longest_session']['date']))))
