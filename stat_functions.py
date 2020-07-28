@@ -106,10 +106,13 @@ def get_most_used_words(msgs):
     for word in manual:
         stop_words.add(word)
     L = []
+    count = 0
     for msg in msgs:
         if '<Media' in msg:
             continue
         for word in msg.split():
+            if 'fuc' in word.lower():
+                count += 1
             if word.lower() not in stop_words:
                 L.append(word)
     C = Counter(L)

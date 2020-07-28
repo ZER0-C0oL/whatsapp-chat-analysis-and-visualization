@@ -7,7 +7,6 @@ def run_statistics(senders, messages, dates, time_stats, messenger):
     # User stats
     for sender in senders:
         user_stats[sender] = dict()
-        
         date_diff, st, en = biggest_date_difference(list(dates[sender].keys()))
         user_stats[sender]['biggest_date_difference'] = (date_diff, convert_date(st), convert_date(en))
         
@@ -64,13 +63,10 @@ def run_statistics(senders, messages, dates, time_stats, messenger):
     for sender in emoji_stats:
         user_stats[sender]['fav_emojis'] = get_most_used(emoji_stats[sender], 5)
 
-    ## Most used words
-    for sender in messages:
-        # print(sender, ":-")
-        ans = get_most_used_words(messages[sender])
-        # for word, count in ans:
-        #     print(word, ":", count)
-        # print()
+    # ## Most used words
+    # for sender in messages:
+    #     print(sender, ":-")
+    #     ans = get_most_used_words(messages[sender])
 
 
     # Time Statistics
@@ -91,6 +87,12 @@ def run_statistics(senders, messages, dates, time_stats, messenger):
                 date_count[date] += dates[sender][date]
             else:
                 date_count[date] = dates[sender][date]
+
+    # # Avg. msgs per day
+    # total = 0
+    # for date in date_count:
+    #     total += date_count[date]
+    # avg = total // len(date_count)
     date_count = list(date_count.items())
     date_count.sort(key = lambda x: -x[1])
 
@@ -98,6 +100,7 @@ def run_statistics(senders, messages, dates, time_stats, messenger):
     overall_stats['users'] = participants
     overall_stats['dates'] = date_count
     overall_stats['total_msgs'] = total_msgs
+    # overall_stats['avg msgs'] = avg
     if messenger == 'Hike':
-        overall_stats['total_nudges'] = total_nudges   
+        overall_stats['total_nudges'] = total_nudges  
     return user_stats, overall_stats, time_stats
